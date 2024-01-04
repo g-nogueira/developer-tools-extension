@@ -1,6 +1,7 @@
 'use strict';
 
 import './popup.css';
+const { v4: uuidv4 } = require('uuid');
 
 (function() {
   // We will make use of Storage API to get and store `count` value
@@ -27,86 +28,33 @@ import './popup.css';
       );
     },
   };
+  
+  document.addEventListener('DOMContentLoaded', () => {
+  const navbar = document.querySelector('.navbar');
+  const expandIcon = document.createElement('span');
+  expandIcon.classList.add('expand-icon');
 
-  function setupCounter(initialValue = 0) {
-    document.getElementById('counter').innerHTML = initialValue;
+  navbar.addEventListener('click', (event) => {
+    if (event.target.classList.contains('nav-link')) {
+      const collapseId = event.target.getAttribute('href');
+      const collapseElement = document.querySelector(collapseId);
+      collapseElement.classList.toggle('collapse');
 
-    document.getElementById('incrementBtn').addEventListener('click', () => {
-      updateCounter({
-        type: 'INCREMENT',
-      });
-    });
-
-    document.getElementById('decrementBtn').addEventListener('click', () => {
-      updateCounter({
-        type: 'DECREMENT',
-      });
-    });
-  }
-
-  function updateCounter({ type }) {
-    counterStorage.get(count => {
-      let newCount;
-
-      if (type === 'INCREMENT') {
-        newCount = count + 1;
-      } else if (type === 'DECREMENT') {
-        newCount = count - 1;
-      } else {
-        newCount = count;
-      }
-
-      counterStorage.set(newCount, () => {
-        document.getElementById('counter').innerHTML = newCount;
-
-        // Communicate with content script of
-        // active tab by sending a message
-        chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-          const tab = tabs[0];
-
-          chrome.tabs.sendMessage(
-            tab.id,
-            {
-              type: 'COUNT',
-              payload: {
-                count: newCount,
-              },
-            },
-            response => {
-              console.log('Current count value passed to contentScript file');
-            }
-          );
-        });
-      });
-    });
-  }
-
-  function restoreCounter() {
-    // Restore count value
-    counterStorage.get(count => {
-      if (typeof count === 'undefined') {
-        // Set counter value as 0
-        counterStorage.set(0, () => {
-          setupCounter(0);
-        });
-      } else {
-        setupCounter(count);
-      }
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', restoreCounter);
-
-  // Communicate with background file by sending a message
-  chrome.runtime.sendMessage(
-    {
-      type: 'GREETINGS',
-      payload: {
-        message: 'Hello, my name is Pop. I am from Popup.',
-      },
-    },
-    response => {
-      console.log(response.message);
+      event.target.classList.toggle('active');
+      expandIcon.classList.toggle('rotate');
     }
-  );
+  });
+
+  expandIcon.addEventListener('click', () => {
+    navbar.querySelector('.nav-link.active').click();
+  });
+});
+
+const uuidGenerator = () => {
+  const generatedUuid = uuidv4();
+  document.getElementById('generated-uuid').textContent = generatedUuid;
+};
+
+document.getElementById('generate-uuid').addEventListener('click', uuidGenerator);
+
 })();

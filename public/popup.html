@@ -1,32 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>My Chrome Extension</title>
-    <link rel="stylesheet" href="popup.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cryptography Extension</title>
+  <link rel="stylesheet" href="popup.css" />
 </head>
+
 <body>
-  <div class="app">
-    <p class="counter-label">Counter</p>
-    <div id="counter" class="counter"></div>
-    <div class="button-container">
-      <button id="decrementBtn" class="button">-</button>
-      <button id="incrementBtn" class="button">+</button>
+  <div class="popup">
+    <div class="container">
+      <nav class="navbar">
+        <ul>
+          <li><a href="#cryptography" class="nav-link">Cryptography</a>
+            <ul class="submenu">
+              <li><a href="#hashing">Hashing</a></li>
+              <li><a href="#hmac">HMAC</a></li>
+            </ul>
+          </li>
+          <li><a href="#uuid" class="nav-link">UUID</a></li>
+          <li><a href="#formatting" class="nav-link">Formatting</a>
+            <ul class="submenu">
+              <li><a href="#code-style">Code Style Formatting</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <div id="cryptography" class="collapse">
+        <h2>Cryptography</h2>
+        <p>Placeholder for cryptography tools</p>
+      </div>
+
+      <div id="uuid" class="section">
+        <h2>UUID Generator</h2>
+        <p>Generates a random UUID</p>
+        <input type="button" id="generate-uuid" value="Generate UUID">
+        <p id="generated-uuid"></p>
+      </div>
+
+      <div id="formatting" class="collapse">
+        <h2>Formatting</h2>
+        <p>Placeholder for code style formatting</p>
+      </div>
     </div>
-
-    <hr class="divider" />
-
-    <p class="title">Chrome Extension is Ready!</p>
-    <p class="subtitle">Start by updating <code>popup.html</code></p>
   </div>
-
   <script src="popup.js"></script>
-
-  <!--
-    This HTML file opens when you click on icon from the toolbar.
-
-    To begin the development, run `npm run watch`.
-    To create a production bundle, use `npm run build`.
-  -->
 </body>
+
 </html>

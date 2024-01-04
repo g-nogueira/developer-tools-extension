@@ -3,6 +3,7 @@
 const SizePlugin = require('size-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 const PATHS = require('./paths');
 
@@ -61,6 +62,9 @@ const common = {
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
+    new NodePolyfillPlugin({
+      excludeAliases: ['console']
+    })
   ],
 };
 

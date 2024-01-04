@@ -6,87 +6,87 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 /* normalize css ends here */
 
-
-html {
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
-    color: #222;
-}
-
-body {
-    width: 350px;
-    height: 300px;
-}
-
-.app {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
+.popup {
+    width: 1200px;
+    background-color: #f8f8f8;
     padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    /* Added overflow property to handle content overflow */
 }
 
-.title {
-    font-size: 18px;
-    font-weight: 600;
+.container {
+    display: flex;
+}
+
+.navbar {
+    background-color: #4CAF50;
+    padding: 10px;
+    border-radius: 8px;
     margin-bottom: 10px;
 }
 
-.subtitle {
-    font-size: 12px;
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-code {
-    font-size: 12px;
-    font-family: inherit;
-    background-color: rgba(254, 237, 185, .3);
-    padding: 2px 4px;
-    border-radius: 2px;
-}
-
-.counter-label {
-    font-size: 12px;
+.navbar li {
     margin-bottom: 5px;
 }
 
-.counter {
-    font-size: 36px;
-    font-weight: 700;
-}
-
-.button-container {
-    margin-top: 15px;
-}
-
-.button {
-    border: 0;
-    display: inline-block;
-    padding: 10px 20px;
-    margin-right: 4px;
-    margin-left: 4px;
-    background-color: bisque;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
+.nav-link {
+    display: block;
     text-decoration: none;
-    transition: transform .2s ease;
-    user-select: none;
+    padding: 10px;
+    margin-bottom: 5px;
+    color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-.button:focus {
-    outline: none;
+.nav-link:hover {
+    background-color: #45a049;
 }
 
-.button:hover {
-    transform: scale(1.1);
+.collapse {
+    display: none;
+    padding-left: 20px;
+    /* Added padding to indent child items */
 }
 
-.divider {
-    margin: 30px auto 25px;
-    width: 50px;
-    border: .5px dashed #000;
-    opacity: .1;
+.submenu {
+    padding-left: 20px;
+    /* Adjusted padding for submenu items */
+}
+
+.section {
+    padding: 20px;
+}
+
+#generate-uuid {
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#generate-uuid:hover {
+    background-color: #45a049;
+}
+
+#generated-uuid {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
 }
