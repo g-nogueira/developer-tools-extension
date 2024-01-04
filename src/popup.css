@@ -68,11 +68,13 @@
 
 .section {
     padding: 20px;
+    margin-left: 20px;
+    /* Add left margin for content sections */
 }
 
 #generate-uuid {
     cursor: pointer;
-    background-color: #4CAF50;
+    background-color: #3498db;
     color: #fff;
     padding: 8px 15px;
     border: none;
@@ -82,7 +84,7 @@
 }
 
 #generate-uuid:hover {
-    background-color: #45a049;
+    background-color: #2980b9;
 }
 
 #generated-uuid {
