@@ -19,3 +19,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     });
   }
 });
+
+const runCodeInTab = (code) => {
+    browser.scripting.executeScript({
+      func: () => code,
+      injectimmediately: true
+    });
+};
