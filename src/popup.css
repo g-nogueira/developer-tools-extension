@@ -72,6 +72,29 @@
     /* Add left margin for content sections */
 }
 
+.button {
+    cursor: pointer;
+    background-color: #3498db;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #2980b9;
+}
+
+/* Update button IDs to use the new class */
+#generate-uuid,
+#add-bookmarklet,
+#save-code,
+#clear-bookmarklets {
+    /* Additional specific styles if needed */
+}
+
 #generate-uuid {
     cursor: pointer;
     background-color: #3498db;
@@ -95,11 +118,17 @@
 
 /* Add the following styles for the Code Execution section */
 #code-execution textarea {
-    width: 100%;
+    width: 95%;
+    /* Reduced width for better padding */
     height: 100px;
     margin-bottom: 10px;
+    padding: 10px;
+    /* Added padding for better text spacing */
+    border: 1px solid #ddd;
+    /* Added border */
+    border-radius: 5px;
+    /* Rounded corners */
 }
-
 #run-code,
 #save-code {
     cursor: pointer;
@@ -123,14 +152,57 @@
 }
 
 #stored-codes-list li {
-    cursor: pointer;
+    cursor: default;
+    /* Change cursor to default as it's not clickable */
     margin-bottom: 5px;
-    padding: 5px;
+    padding: 10px;
     background-color: #f2f2f2;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #stored-codes-list li:hover {
     background-color: #ddd;
+}
+
+/* Style for delete buttons in list items */
+#stored-codes-list .delete-button {
+    cursor: pointer;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin-left: 10px;
+}
+
+#stored-codes-list .delete-button:hover {
+    background-color: #c0392b;
+}
+
+#code-execution textarea {
+    width: 95%;
+    /* Reduced width for better padding */
+    height: 100px;
+    margin-bottom: 10px;
+    padding: 10px;
+    /* Added padding for better text spacing */
+    border: 1px solid #ddd;
+    /* Added border */
+    border-radius: 5px;
+    /* Rounded corners */
+}
+
+#add-bookmarklet,
+#clear-bookmarklets {
+    background-color: #16a085;
+    /* Different color for bookmarklet actions */
+}
+
+#add-bookmarklet:hover,
+#clear-bookmarklets:hover {
+    background-color: #138d75;
 }

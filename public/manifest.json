@@ -17,9 +17,11 @@
     "default_popup": "popup.html"
   },
   "permissions": [
+    "tabs",
     "storage",
     "scripting",
-    "activeTab"
+    "activeTab",
+    "bookmarks"
   ],
   "content_scripts": [
     {

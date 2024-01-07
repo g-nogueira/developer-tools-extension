@@ -5,24 +5,17 @@
 // For more information on background script,
 // See https://developer.chrome.com/extensions/background_pages
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === 'GREETINGS') {
-    const message = `Hi ${
-      sender.tab ? 'Con' : 'Pop'
-    }, my name is Bac. I am from Background. It's great to hear from you.`;
+// const runCodeInTab = (tabId, code) => {
+//   chrome.scripting.executeScript({
+//     target: { tabId: tabId },
+//     function: new Function(code),
+//   });
+// };
 
-    // Log message coming from the `request` parameter
-    console.log(request.payload.message);
-    // Send a response message
-    sendResponse({
-      message,
-    });
-  }
-});
 
-const runCodeInTab = (code) => {
-    browser.scripting.executeScript({
-      func: () => code,
-      injectimmediately: true
-    });
-};
+
+// chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+//   if (message.action === "runCodeInTab") {
+//     runCodeInTab(message.tabId, message.code);
+//   }
+// });

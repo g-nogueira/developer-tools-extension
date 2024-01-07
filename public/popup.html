@@ -36,16 +36,20 @@
         <h2>Formatting</h2>
         <p>Placeholder for code style formatting content.</p>
       </div>
+
+      <div id="code-execution" class="section collapse">
+        <h2>Code Execution</h2>
+        <textarea id="js-code-input" placeholder="Enter JavaScript code"></textarea>
+        <button id="add-bookmarklet" class="button">Add Bookmarklet</button>
+        <button id="save-code" class="button">Save for Later</button>
+        <button id="clear-bookmarklets" class="button">Clear Bookmarklets</button>
+        <h3>Saved Codes</h3>
+        <ul id="stored-codes-list" class="saved-codes-list"></ul>
+      </div>
     </div>
   </div>
 
-  <div id="code-execution" class="section collapse">
-    <h2>Code Execution</h2>
-    <textarea id="js-code-input" placeholder="Enter JavaScript code"></textarea>
-    <button id="run-code">Run Code</button>
-    <button id="save-code">Save for Later</button>
-    <ul id="stored-codes-list"></ul>
-  </div>
+
 
   <script src="popup.js"></script>
 </body>
