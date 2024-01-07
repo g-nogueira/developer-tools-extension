@@ -105,8 +105,12 @@ function refreshStoredCodesList() {
     ); // Preview of the code
     listItem.appendChild(codeText);
 
+    const buttonGroup = document.createElement("div");
+    buttonGroup.className = "button-group";
+
     // Add a button to create a bookmarklet from this code
     const addButton = document.createElement("button");
+    addButton.innerHTML = '<i class="fas fa-plus"></i> Add as Bookmarklet';    
     addButton.textContent = "Add as Bookmarklet";
     addButton.className = "button"; // Apply 'button' class for styling
     addButton.onclick = function () {
@@ -115,16 +119,18 @@ function refreshStoredCodesList() {
         `javascript:${encodeURIComponent(code)}`
       );
     };
-    listItem.appendChild(addButton);
 
     // Inside your loop in the refreshStoredCodesList function
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
     deleteButton.className = "delete-button button"; // Apply both 'delete-button' and 'button' classes
     deleteButton.onclick = function () {
-      /* function to delete the saved code */
+      deleteSavedCode(index);
     };
-    listItem.appendChild(deleteButton);
+    
+    buttonGroup.appendChild(addButton);
+    buttonGroup.appendChild(deleteButton);
+    listItem.appendChild(buttonGroup);
 
     storedCodesList.appendChild(listItem);
   });

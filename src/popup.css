@@ -8,16 +8,20 @@
 }
 
 /* normalize css ends here */
+body {
+    width: 800px;
+}
 
 .popup {
-    width: 1200px;
+    max-width: 800px;
+    width: 100%;
     background-color: #f8f8f8;
     padding: 20px;
     margin: 20px auto;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow: auto;
-    /* Added overflow property to handle content overflow */
+    overflow: hidden;
+    /* Changed from auto to hide the scrollbar */
 }
 
 .container {
@@ -26,9 +30,20 @@
 
 .navbar {
     background-color: #4CAF50;
-    padding: 10px;
+    padding: 15px;
+    /* Increased padding */
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    /* Increased margin for better separation */
+}
+
+.section {
+    padding: 20px;
+    border-left: 4px solid #4CAF50;
+    /* Added a left border for definition */
+    margin-left: 20px;
+    margin-bottom: 20px;
+    /* Add bottom margin for spacing */
 }
 
 .navbar ul {
@@ -66,13 +81,15 @@
     /* Adjusted padding for submenu items */
 }
 
-.section {
-    padding: 20px;
-    margin-left: 20px;
-    /* Add left margin for content sections */
-}
-
 .button {
+    display: inline-flex;
+    /* To align text and icon */
+    align-items: center;
+    /* Vertical alignment */
+    justify-content: center;
+    /* Horizontal alignment */
+    gap: 8px;
+    /* Space between icon and text */
     cursor: pointer;
     background-color: #3498db;
     color: #fff;
@@ -118,6 +135,10 @@
 
 /* Add the following styles for the Code Execution section */
 #code-execution textarea {
+    background-color: #fff;
+    /* Light background for the textarea */
+    border: 1px solid #ddd;
+    /* Subtle border */
     width: 95%;
     /* Reduced width for better padding */
     height: 100px;
@@ -147,21 +168,60 @@
 }
 
 #stored-codes-list {
+    background-color: #fff;
+    /* Change to white for a clean look */
+    border: 1px solid #ddd;
+    /* Add border for definition */
     list-style: none;
     padding: 0;
 }
 
 #stored-codes-list li {
     cursor: default;
-    /* Change cursor to default as it's not clickable */
-    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    /* This ensures items are spaced out */
+    align-items: center;
+    /* Aligns items vertically */
+    margin-bottom: 10px;
     padding: 10px;
     background-color: #f2f2f2;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+}
+
+#stored-codes-list li .button-group {
+    /* Grouping buttons to manage spacing collectively */
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    gap: 8px;
+    /* Adds space between buttons */
+}
+
+#stored-codes-list .button {
+    /* Apply this to both 'Add as Bookmarklet' and 'Delete' buttons */
+    padding: 5px 10px;
+    /* Adjust padding to your preference */
+    font-size: 0.8rem;
+    /* Adjust font size to fit the button */
+    line-height: 1;
+    /* Adjust line height for better text alignment */
+}
+
+#stored-codes-list .delete-button {
+    background-color: #e74c3c;
+    /* ... other .delete-button styles ... */
+}
+
+/* Adjustments for button hover effects */
+#stored-codes-list .button:hover {
+    /* Use a slightly darker shade for the hover effect */
+    background-color: darken(#3498db, 10%);
+    /* Replace with the actual darker shade of your button color */
+}
+
+#stored-codes-list .delete-button:hover {
+    background-color: darken(#e74c3c, 10%);
+    /* Replace with the actual darker shade of your delete button color */
 }
 
 #stored-codes-list li:hover {

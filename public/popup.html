@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cryptography Extension</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="popup.css" />
 </head>
 
@@ -40,9 +41,9 @@
       <div id="code-execution" class="section collapse">
         <h2>Code Execution</h2>
         <textarea id="js-code-input" placeholder="Enter JavaScript code"></textarea>
-        <button id="add-bookmarklet" class="button">Add Bookmarklet</button>
-        <button id="save-code" class="button">Save for Later</button>
-        <button id="clear-bookmarklets" class="button">Clear Bookmarklets</button>
+        <button id="add-bookmarklet" class="button"><i class="fas fa-plus"></i> Add Bookmarklet</button>
+        <button id="save-code" class="button"><i class="fas fa-save"></i> Save for Later</button>
+        <button id="clear-bookmarklets" class="button"><i class="fas fa-trash-alt"></i> Clear Bookmarklets</button>
         <h3>Saved Codes</h3>
         <ul id="stored-codes-list" class="saved-codes-list"></ul>
       </div>
