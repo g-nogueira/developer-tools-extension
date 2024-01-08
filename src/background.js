@@ -14,8 +14,8 @@
 
 
 
-// chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-//   if (message.action === "runCodeInTab") {
-//     runCodeInTab(message.tabId, message.code);
-//   }
-// });
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === "runCodeInTab") {
+    runCodeInTab(message.tabId, message.code);
+  }
+});
