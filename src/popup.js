@@ -97,10 +97,14 @@ const { v4: uuidv4 } = require('uuid');
     const bookmarkletLink = createBookmarkletLink(bookmarklet);
     const editButton = createButton('Edit', 'button', 'edit-button', () => editBookmarklet(bookmarklet));
     const deleteButton = createButton('Delete', 'delete-button', 'button', () => deleteBookmarklet(bookmarklet));
+    const buttonGroup = document.createElement("div");
 
+    buttonGroup.className = "button-group";
+    
+    buttonGroup.appendChild(editButton);
+    buttonGroup.appendChild(deleteButton);
     listItem.appendChild(bookmarkletLink);
-    listItem.appendChild(editButton);
-    listItem.appendChild(deleteButton);
+    listItem.appendChild(buttonGroup);
 
     return listItem;
   }

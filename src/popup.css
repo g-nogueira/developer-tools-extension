@@ -1,4 +1,4 @@
-/* normalize css starts here */
+/* Normalize CSS */
 *,
 *::before,
 *::after {
@@ -7,11 +7,12 @@
     box-sizing: border-box;
 }
 
-/* normalize css ends here */
+/* Body styling */
 body {
     width: 800px;
 }
 
+/* Popup container */
 .popup {
     max-width: 800px;
     width: 100%;
@@ -21,31 +22,30 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    /* Changed from auto to hide the scrollbar */
 }
 
+/* Container for sections */
 .container {
     display: flex;
 }
 
+/* Navigation bar */
 .navbar {
     background-color: #4CAF50;
     padding: 15px;
-    /* Increased padding */
     border-radius: 8px;
     margin-bottom: 20px;
-    /* Increased margin for better separation */
 }
 
+/* Section styling */
 .section {
     padding: 20px;
     border-left: 4px solid #4CAF50;
-    /* Added a left border for definition */
     margin-left: 20px;
     margin-bottom: 20px;
-    /* Add bottom margin for spacing */
 }
 
+/* Navigation links */
 .navbar ul {
     list-style: none;
     padding: 0;
@@ -70,33 +70,28 @@ body {
     background-color: #45a049;
 }
 
+/* Collapsible sections */
 .collapse {
     display: none;
     padding-left: 20px;
-    /* Added padding to indent child items */
 }
 
 .submenu {
     padding-left: 20px;
-    /* Adjusted padding for submenu items */
 }
 
+/* Generic button styling */
 .button {
     display: inline-flex;
-    /* To align text and icon */
     align-items: center;
-    /* Vertical alignment */
     justify-content: center;
-    /* Horizontal alignment */
     gap: 8px;
-    /* Space between icon and text */
     cursor: pointer;
     background-color: #3498db;
     color: #fff;
     padding: 8px 15px;
     border: none;
     border-radius: 5px;
-    margin-top: 10px;
     transition: background-color 0.3s ease;
 }
 
@@ -104,7 +99,7 @@ body {
     background-color: #2980b9;
 }
 
-/* Update button IDs to use the new class */
+/* Button IDs */
 #generate-uuid,
 #add-bookmarklet,
 #save-code,
@@ -112,6 +107,7 @@ body {
     /* Additional specific styles if needed */
 }
 
+/* Generate UUID button */
 #generate-uuid {
     cursor: pointer;
     background-color: #3498db;
@@ -133,23 +129,17 @@ body {
     color: #333;
 }
 
-/* Add the following styles for the Code Execution section */
+/* Code Execution section */
 #code-execution textarea {
     background-color: #fff;
-    /* Light background for the textarea */
     border: 1px solid #ddd;
-    /* Subtle border */
     width: 95%;
-    /* Reduced width for better padding */
     height: 100px;
     margin-bottom: 10px;
     padding: 10px;
-    /* Added padding for better text spacing */
-    border: 1px solid #ddd;
-    /* Added border */
     border-radius: 5px;
-    /* Rounded corners */
 }
+
 #run-code,
 #save-code {
     cursor: pointer;
@@ -167,11 +157,10 @@ body {
     background-color: #2980b9;
 }
 
+/* Stored Codes List */
 #stored-codes-list {
     background-color: #fff;
-    /* Change to white for a clean look */
     border: 1px solid #ddd;
-    /* Add border for definition */
     list-style: none;
     padding: 0;
 }
@@ -180,9 +169,7 @@ body {
     cursor: default;
     display: flex;
     justify-content: space-between;
-    /* This ensures items are spaced out */
     align-items: center;
-    /* Aligns items vertically */
     margin-bottom: 10px;
     padding: 10px;
     background-color: #f2f2f2;
@@ -190,86 +177,7 @@ body {
     transition: background-color 0.3s ease;
 }
 
-#stored-codes-list li .button-group {
-    /* Grouping buttons to manage spacing collectively */
-    display: flex;
-    gap: 8px;
-    /* Adds space between buttons */
-}
-
-#stored-codes-list .button {
-    /* Apply this to both 'Add as Bookmarklet' and 'Delete' buttons */
-    padding: 5px 10px;
-    /* Adjust padding to your preference */
-    font-size: 0.8rem;
-    /* Adjust font size to fit the button */
-    line-height: 1;
-    /* Adjust line height for better text alignment */
-}
-
-#stored-codes-list .delete-button {
-    background-color: #e74c3c;
-    /* ... other .delete-button styles ... */
-}
-
-/* Adjustments for button hover effects */
-#stored-codes-list .button:hover {
-    /* Use a slightly darker shade for the hover effect */
-    background-color: darken(#3498db, 10%);
-    /* Replace with the actual darker shade of your button color */
-}
-
-#stored-codes-list .delete-button:hover {
-    background-color: darken(#e74c3c, 10%);
-    /* Replace with the actual darker shade of your delete button color */
-}
-
-#stored-codes-list li:hover {
-    background-color: #ddd;
-}
-
-/* Style for delete buttons in list items */
-#stored-codes-list .delete-button {
-    cursor: pointer;
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    margin-left: 10px;
-}
-
-#stored-codes-list .delete-button:hover {
-    background-color: #c0392b;
-}
-
-#code-execution textarea {
-    width: 95%;
-    /* Reduced width for better padding */
-    height: 100px;
-    margin-bottom: 10px;
-    padding: 10px;
-    /* Added padding for better text spacing */
-    border: 1px solid #ddd;
-    /* Added border */
-    border-radius: 5px;
-    /* Rounded corners */
-}
-
-#add-bookmarklet,
-#clear-bookmarklets {
-    background-color: #16a085;
-    /* Different color for bookmarklet actions */
-}
-
-#add-bookmarklet:hover,
-#clear-bookmarklets:hover {
-    background-color: #138d75;
-}
-
-/* Styles for the Bookmarklet Manager section */
-
-/* Container for the Bookmarklet Manager */
+/* Bookmarklet Manager section styling */
 #bookmarklet-manager {
     padding: 20px;
     border-left: 4px solid #4CAF50;
@@ -280,7 +188,7 @@ body {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Header for the "Add New Bookmarklet" section */
+/* Header for "Add New Bookmarklet" section */
 #bookmarklet-manager h3 {
     font-size: 1.2rem;
     margin-bottom: 10px;
@@ -293,7 +201,7 @@ body {
     margin-top: 10px;
 }
 
-/* Input fields for the name and code */
+/* Input fields for name and code */
 #bookmarklet-manager input[type="text"],
 #bookmarklet-manager textarea {
     width: 100%;
@@ -319,14 +227,14 @@ body {
     background-color: #2980b9;
 }
 
-/* Style for the list of bookmarklets */
+/* List of bookmarklets */
 #bookmarklet-list {
     list-style: none;
     padding: 0;
     margin-top: 20px;
 }
 
-/* Style for each bookmarklet item */
+/* Styling for each bookmarklet item */
 #bookmarklet-list li {
     display: flex;
     justify-content: space-between;
