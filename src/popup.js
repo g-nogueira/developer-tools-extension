@@ -6,6 +6,8 @@ const { v4: uuidv4 } = require('uuid');
 (function () {
   document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.querySelector('.navbar');
+    const generateButton = document.getElementById('generate-uuid');
+    const generatedUuidElement = document.getElementById('generated-uuid');
 
     navbar.addEventListener('click', (event) => {
       if (event.target.classList.contains('nav-link')) {
@@ -25,14 +27,43 @@ const { v4: uuidv4 } = require('uuid');
         }
       }
     });
-  });
 
-  const uuidGenerator = () => {
-    const generatedUuid = uuidv4();
-    document.getElementById('generated-uuid').textContent = generatedUuid;
-  };
+    const uuidGenerator = () => {
+      // Disable the button while generating
+      generateButton.disabled = true;
 
-  document.getElementById('generate-uuid').addEventListener('click', uuidGenerator);
+      try {
+        const generatedUuid = uuidv4();
+        generatedUuidElement.textContent = generatedUuid;
+
+        // Create a temporary textarea to facilitate copying to clipboard
+        const tempTextarea = document.createElement('textarea');
+        tempTextarea.value = generatedUuid;
+        document.body.appendChild(tempTextarea);
+        tempTextarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempTextarea);
+
+        // Display a confirmation message
+        alert('UUID copied to clipboard.');
+
+      } catch (error) {
+        console.error('Error generating UUID:', error);
+        // Display an error message if UUID generation fails
+        alert('Error generating UUID. Please try again.');
+      } finally {
+        // Re-enable the button
+        generateButton.disabled = false;
+      }
+    };
+
+    generateButton.addEventListener('click', uuidGenerator);
+
+    // Event listener to clear the generated UUID
+    document.getElementById('clear-uuid').addEventListener('click', () => {
+      generatedUuidElement.textContent = '';
+    });
+});
 
   // Event listener for the "Add Bookmarklet" button
   document.getElementById("add-bookmarklet").addEventListener("click", () => {
