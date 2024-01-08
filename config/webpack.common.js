@@ -4,6 +4,7 @@ const SizePlugin = require('size-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
+const ZipPlugin = require('zip-webpack-plugin');
 
 const PATHS = require('./paths');
 
@@ -64,6 +65,9 @@ const common = {
     }),
     new NodePolyfillPlugin({
       excludeAliases: ['console']
+    }),
+    new ZipPlugin({
+      filename: 'developer-tools.zip',
     })
   ],
 };
