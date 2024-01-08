@@ -17,7 +17,7 @@
           <li><a href="#cryptography" class="nav-link" data-target="cryptography">Cryptography</a></li>
           <li><a href="#uuid" class="nav-link active" data-target="uuid">UUID</a></li>
           <li><a href="#formatting" class="nav-link" data-target="formatting">Formatting</a></li>
-          <li><a href="#code-execution" class="nav-link" data-target="code-execution">Code Execution</a></li>
+          <li><a href="#bookmarklet-manager" class="nav-link" data-target="bookmarklet-manager">Bookmarklet Manager</a></li>
         </ul>
       </nav>
 
@@ -38,15 +38,20 @@
         <p>Placeholder for code style formatting content.</p>
       </div>
 
-      <div id="code-execution" class="section collapse">
-        <h2>Code Execution</h2>
-        <textarea id="js-code-input" placeholder="Enter JavaScript code"></textarea>
-        <button id="add-bookmarklet" class="button"><i class="fas fa-plus"></i> Add Bookmarklet</button>
-        <button id="save-code" class="button"><i class="fas fa-save"></i> Save for Later</button>
-        <button id="clear-bookmarklets" class="button"><i class="fas fa-trash-alt"></i> Clear Bookmarklets</button>
-        <h3>Saved Codes</h3>
-        <ul id="stored-codes-list" class="saved-codes-list"></ul>
+      <!-- Add input fields for entering the name and code of a new bookmarklet -->
+      <div id="bookmarklet-manager" class="section collapse">
+        <h2>Bookmarklet Manager</h2>
+        <ul id="bookmarklet-list"></ul>
+        <div class="new-bookmarklet">
+          <h3>Add New Bookmarklet</h3>
+          <label for="bookmarklet-name">Name:</label>
+          <input type="text" id="bookmarklet-name" placeholder="Bookmarklet Name">
+          <label for="bookmarklet-code">JavaScript Code:</label>
+          <textarea id="bookmarklet-code" placeholder="JavaScript Code"></textarea>
+          <button id="create-bookmarklet">Create Bookmarklet</button>
+        </div>
       </div>
+
     </div>
   </div>
 
