@@ -58,122 +58,104 @@ const { v4: uuidv4 } = require('uuid');
     };
 
     generateButton.addEventListener('click', uuidGenerator);
-
-    // Event listener to clear the generated UUID
-    document.getElementById('clear-uuid').addEventListener('click', () => {
-      generatedUuidElement.textContent = '';
-    });
-});
-
-  // Event listener for the "Add Bookmarklet" button
-  document.getElementById("add-bookmarklet").addEventListener("click", () => {
-    const code = document.getElementById("js-code-input").value;
-    const title = "My Bookmarklet"; // You can customize this title
-    createBookmarklet(title, `javascript:${encodeURIComponent(code)}`);
   });
 
-  function createBookmarklet(title, code) {
-    chrome.bookmarks.create({
-      parentId: "1", // or the ID of a specific folder
-      title: title,
-      url: code,
-    },
+  // Function to get all bookmarks with 'javascript:' scheme
+  function getBookmarklets(callback) {
+    chrome.bookmarks.search({ query: "javascript:*" }, (results) => {
+      callback(results);
+    });
+  }
+
+  /********* BOOKMARKLETS MANAGER *********/
+
+  // Call this function to populate the list of bookmarklets
+  function populateBookmarkletList() {
+    getBookmarklets((bookmarklets) => {
+      const bookmarkletList = document.getElementById("bookmarklet-list");
+      bookmarkletList.innerHTML = ""; // Clear the existing list before populating
+
+      bookmarklets.forEach((bookmarklet) => {
+        const listItem = document.createElement("li");
+        const bookmarkletLink = document.createElement("a");
+        bookmarkletLink.href = bookmarklet.url;
+        bookmarkletLink.textContent = bookmarklet.title;
+
+        // Add buttons for editing and deleting bookmarklets
+        const editButton = document.createElement("button");
+        editButton.textContent = "Edit";
+        editButton.classList.add("button");
+        editButton.addEventListener("click", () => {
+          // Implement a function to edit the bookmarklet
+          editBookmarklet(bookmarklet);
+        });
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "delete-button button";
+        deleteButton.addEventListener("click", () => {
+          // Implement a function to delete the bookmarklet
+          deleteBookmarklet(bookmarklet);
+        });
+
+        listItem.appendChild(bookmarkletLink);
+        listItem.appendChild(editButton);
+        listItem.appendChild(deleteButton);
+
+        bookmarkletList.appendChild(listItem);
+      });
+    });
+  }
+
+  function editBookmarklet(bookmarklet) {
+    const newName = prompt("Enter a new name for the bookmarklet:", bookmarklet.title);
+    const newCode = prompt("Enter the new JavaScript code:", decodeURIComponent(bookmarklet.url.split(":")[1]));
+
+    if (newName !== null && newCode !== null) {
+      // Update the bookmarklet with the new name and code
+      const updatedUrl = `javascript:${encodeURIComponent(newCode)}`;
+      chrome.bookmarks.update(bookmarklet.id, { title: newName, url: updatedUrl }, (updatedBookmark) => {
+        console.log("Bookmarklet updated: ", updatedBookmark);
+        // Refresh the list after updating
+        populateBookmarkletList();
+      });
+    }
+  }
+
+  function deleteBookmarklet(bookmarklet) {
+    chrome.bookmarks.remove(bookmarklet.id, () => {
+      console.log(`Bookmarklet with ID ${bookmarklet.id} removed`);
+      // Refresh the list after deleting
+      populateBookmarkletList();
+    });
+  }
+
+  // Call populateBookmarkletList when the page loads
+  document.addEventListener("DOMContentLoaded", populateBookmarkletList);
+
+  // Add event listeners for Create, Update, Delete buttons in your popup.js
+  document.getElementById("create-bookmarklet").addEventListener("click", () => {
+    // Get user input (name and JavaScript code) from input elements
+    const name = document.getElementById("bookmarklet-name").value;
+    const code = document.getElementById("bookmarklet-code").value;
+    createBookmarklet(name, code);
+  });
+
+  // When you create a bookmarklet, save its ID along with a unique identifier (e.g., title or code)
+  function createBookmarklet(name, code) {
+    const url = `javascript:${encodeURIComponent(code)}`;
+    chrome.bookmarks.create(
+      {
+        parentId: "1", // or the ID of a specific folder
+        title: name,
+        url: url,
+      },
       function (newBookmark) {
         console.log("New bookmarklet created: ", newBookmark);
-        saveBookmarkletId(newBookmark.id);
+        // Refresh the list after creating
+        populateBookmarkletList();
       }
     );
   }
-
-  function saveBookmarkletId(bookmarkletId) {
-    const bookmarkletIds = JSON.parse(localStorage.getItem("bookmarkletIds")) || [];
-
-    bookmarkletIds.push(bookmarkletId);
-    localStorage.setItem("bookmarkletIds", JSON.stringify(bookmarkletIds));
-  }
-
-
-  // Event listener for the "Clear All Bookmarklets" button
-  document.getElementById("clear-bookmarklets").addEventListener("click", () => {
-    const bookmarkletIds = JSON.parse(localStorage.getItem("bookmarkletIds")) || [];
-
-    bookmarkletIds.forEach((bookmarkletId) => {
-      chrome.bookmarks.remove(bookmarkletId, () => {
-        console.log(`Bookmarklet with ID ${bookmarkletId} removed`);
-      });
-    });
-
-    localStorage.setItem("bookmarkletIds", JSON.stringify([])); // Clear the stored IDs
-  });
-
-
-  document.getElementById("save-code").addEventListener("click", () => {
-    const codeToSave = document.getElementById("js-code-input").value;
-    saveCodeForLater(codeToSave);
-    refreshStoredCodesList();
-  });
-
-  function saveCodeForLater(code) {
-    // Retrieve the existing saved codes from local storage
-    const storedCodes = JSON.parse(localStorage.getItem("storedCodes")) || [];
-    // Add the new code to the array
-    storedCodes.push(code);
-    // Save the updated array back to local storage
-    localStorage.setItem("storedCodes", JSON.stringify(storedCodes));
-  }
-
-
-  // Function to refresh the list of stored codes in the content section
-  function refreshStoredCodesList() {
-    const storedCodesList = document.getElementById("stored-codes-list");
-    storedCodesList.innerHTML = ""; // Clear the existing list
-    const storedCodes = JSON.parse(localStorage.getItem("storedCodes")) || [];
-
-    storedCodes.forEach((code, index) => {
-      const listItem = document.createElement("li");
-      const codeText = document.createTextNode(
-        `Code ${index + 1}: ${code.substring(0, 50)}...`
-      ); // Preview of the code
-      listItem.appendChild(codeText);
-
-      const buttonGroup = document.createElement("div");
-      buttonGroup.className = "button-group";
-
-      // Add a button to create a bookmarklet from this code
-      const addButton = document.createElement("button");
-      addButton.innerHTML = '<i class="fas fa-plus"></i> Add as Bookmarklet';
-      addButton.textContent = "Add as Bookmarklet";
-      addButton.className = "button"; // Apply 'button' class for styling
-      addButton.onclick = function () {
-        createBookmarklet(
-          `Bookmarklet ${index + 1}`,
-          `javascript:${encodeURIComponent(code)}`
-        );
-      };
-
-      // Inside your loop in the refreshStoredCodesList function
-      const deleteButton = document.createElement("button");
-      deleteButton.textContent = "Delete";
-      deleteButton.className = "delete-button button"; // Apply both 'delete-button' and 'button' classes
-      deleteButton.onclick = function () {
-        deleteSavedCode(index);
-      };
-
-      buttonGroup.appendChild(addButton);
-      buttonGroup.appendChild(deleteButton);
-      listItem.appendChild(buttonGroup);
-
-      storedCodesList.appendChild(listItem);
-    });
-  }
-
-  function deleteSavedCode(index) {
-    const storedCodes = JSON.parse(localStorage.getItem("storedCodes")) || [];
-    storedCodes.splice(index, 1); // Remove the code at the specified index
-    localStorage.setItem("storedCodes", JSON.stringify(storedCodes));
-    refreshStoredCodesList(); // Refresh the list display
-  }
-  // Call refreshStoredCodesList on DOMContentLoaded to populate the list initially
-  document.addEventListener('DOMContentLoaded', refreshStoredCodesList);
 
 })();

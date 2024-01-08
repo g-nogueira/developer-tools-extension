@@ -266,3 +266,116 @@ body {
 #clear-bookmarklets:hover {
     background-color: #138d75;
 }
+
+/* Styles for the Bookmarklet Manager section */
+
+/* Container for the Bookmarklet Manager */
+#bookmarklet-manager {
+    padding: 20px;
+    border-left: 4px solid #4CAF50;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Header for the "Add New Bookmarklet" section */
+#bookmarklet-manager h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+/* Labels for input fields */
+#bookmarklet-manager label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Input fields for the name and code */
+#bookmarklet-manager input[type="text"],
+#bookmarklet-manager textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+/* Button to create a new bookmarklet */
+#bookmarklet-manager #create-bookmarklet {
+    cursor: pointer;
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#bookmarklet-manager #create-bookmarklet:hover {
+    background-color: #2980b9;
+}
+
+/* Style for the list of bookmarklets */
+#bookmarklet-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+/* Style for each bookmarklet item */
+#bookmarklet-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* Button group for each bookmarklet item */
+#bookmarklet-list li .button-group {
+    display: flex;
+    gap: 8px;
+}
+
+/* Common style for buttons in the button group */
+#bookmarklet-list .button {
+    cursor: pointer;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    line-height: 1;
+}
+
+/* Style for the "Edit" button in the button group */
+#bookmarklet-list .edit-button {
+    background-color: #3498db;
+    color: #fff;
+}
+
+#bookmarklet-list .edit-button:hover {
+    background-color: #2980b9;
+}
+
+/* Style for the "Delete" button in the button group */
+#bookmarklet-list .delete-button {
+    background-color: #e74c3c;
+    color: white;
+}
+
+#bookmarklet-list .delete-button:hover {
+    background-color: #c0392b;
+}
+
+/* Hover effect for bookmarklet items */
+#bookmarklet-list li:hover {
+    background-color: #f2f2f2;
+}
