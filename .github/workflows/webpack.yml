@@ -39,6 +39,7 @@ jobs:
           NEW_TAG="${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.${VERSION_PATCH}"
           echo "Generated new tag: $NEW_TAG"
           echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
+          echo "::set-output name=tag::$NEW_TAG"
 
       - name: Push Git Tag
         run: |
@@ -57,4 +58,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: build/*
-          tag_name: ${{ steps.create_tag.outputs.tag }}
+          tag_name: ${{ steps.generate_tag.outputs.tag }}
