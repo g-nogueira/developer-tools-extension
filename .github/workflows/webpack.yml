@@ -15,25 +15,42 @@ jobs:
         node-version: [18.x]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: "0"
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Generate Git Tag
+        id: generate_tag
+        run: |
+          VERSION_PREFIX="v"
+          VERSION_MAJOR_MINOR="1.0"
+          VERSION_PATCH=$(git tag --list "${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.*" --sort=-version:refname | head -n 1 | grep -oE '[0-9]+$')
+          if [ -z "$VERSION_PATCH" ]; then
+            VERSION_PATCH=0
+          else
+            VERSION_PATCH=$((VERSION_PATCH + 1))
+          fi
+          NEW_TAG="${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.${VERSION_PATCH}"
+          echo "Generated new tag: $NEW_TAG"
+          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
+
+      - name: Push Git Tag
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git tag $NEW_TAG
+          git push origin $NEW_TAG
+
       - name: Build
         run: |
           npm install
           npm run build
-
-      - name: Create Tag
-        id: create_tag
-        run: |
-          # Calculate the version based on your project's versioning logic
-          version=$(npm --no-git-tag-version version)
-          git tag $version
-          echo "::set-output name=tag::$version"          
 
       - name: Create Release
         id: create_release
