@@ -1,161 +1,172 @@
 'use strict';
 
+// Import necessary styles and libraries
 import './popup.css';
 const { v4: uuidv4 } = require('uuid');
 
 (function () {
-  document.addEventListener('DOMContentLoaded', () => {
-    const navbar = document.querySelector('.navbar');
-    const generateButton = document.getElementById('generate-uuid');
-    const generatedUuidElement = document.getElementById('generated-uuid');
+  // DOM elements
+  const navbar = document.querySelector('.navbar');
+  const generateButton = document.getElementById('generate-uuid');
+  const generatedUuidElement = document.getElementById('generated-uuid');
 
+  // Initialize the page when the DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    initializePage();
+    generateButton.addEventListener('click', uuidGenerator);
+    document.getElementById('create-bookmarklet').addEventListener('click', createBookmarklet);
+  });
+
+  // Function to initialize the page
+  function initializePage() {
+    setupNavbar();
+    populateBookmarkletList();
+  }
+
+  // Setup navigation bar event listeners
+  function setupNavbar() {
     navbar.addEventListener('click', (event) => {
       if (event.target.classList.contains('nav-link')) {
         const collapseId = event.target.getAttribute('href');
         const collapseElement = document.querySelector(collapseId);
 
-        if (!event.target.classList.contains("active")) {
-          // Collapses all pages
-          [...document.querySelectorAll(".navbar .nav-link")].forEach((el) => {
-            el.classList.remove("active");
-            document.querySelector(el.getAttribute('href')).classList.add("collapse");
-          });
-
-          // Show only the active page
+        if (!event.target.classList.contains('active')) {
+          collapseAllPages();
           event.target.classList.add('active');
           collapseElement.classList.remove('collapse');
         }
       }
     });
+  }
 
-    const uuidGenerator = () => {
-      // Disable the button while generating
-      generateButton.disabled = true;
-
-      try {
-        const generatedUuid = uuidv4();
-        generatedUuidElement.textContent = generatedUuid;
-
-        // Create a temporary textarea to facilitate copying to clipboard
-        const tempTextarea = document.createElement('textarea');
-        tempTextarea.value = generatedUuid;
-        document.body.appendChild(tempTextarea);
-        tempTextarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempTextarea);
-
-        // Display a confirmation message
-        alert('UUID copied to clipboard.');
-
-      } catch (error) {
-        console.error('Error generating UUID:', error);
-        // Display an error message if UUID generation fails
-        alert('Error generating UUID. Please try again.');
-      } finally {
-        // Re-enable the button
-        generateButton.disabled = false;
-      }
-    };
-
-    generateButton.addEventListener('click', uuidGenerator);
-  });
-
-  // Function to get all bookmarks with 'javascript:' scheme
-  function getBookmarklets(callback) {
-    chrome.bookmarks.search({ query: "javascript:*" }, (results) => {
-      callback(results);
+  // Collapse all pages in the navigation
+  function collapseAllPages() {
+    const navLinks = document.querySelectorAll('.navbar .nav-link');
+    navLinks.forEach((el) => {
+      el.classList.remove('active');
+      document.querySelector(el.getAttribute('href')).classList.add('collapse');
     });
   }
 
-  /********* BOOKMARKLETS MANAGER *********/
+  // Generate a UUID and copy it to the clipboard
+  function uuidGenerator() {
+    generateButton.disabled = true;
 
-  // Call this function to populate the list of bookmarklets
+    try {
+      const generatedUuid = uuidv4();
+      generatedUuidElement.textContent = generatedUuid;
+
+      copyToClipboard(generatedUuid);
+
+      alert('UUID copied to clipboard.');
+
+    } catch (error) {
+      console.error('Error generating UUID:', error);
+      alert('Error generating UUID. Please try again.');
+    } finally {
+      generateButton.disabled = false;
+    }
+  }
+
+  // Copy text to the clipboard
+  function copyToClipboard(text) {
+    const tempTextarea = document.createElement('textarea');
+    tempTextarea.value = text;
+    document.body.appendChild(tempTextarea);
+    tempTextarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempTextarea);
+  }
+
+  // Populate the list of bookmarklets
   function populateBookmarkletList() {
     getBookmarklets((bookmarklets) => {
-      const bookmarkletList = document.getElementById("bookmarklet-list");
-      bookmarkletList.innerHTML = ""; // Clear the existing list before populating
+      const bookmarkletList = document.getElementById('bookmarklet-list');
+      bookmarkletList.innerHTML = '';
 
       bookmarklets.forEach((bookmarklet) => {
-        const listItem = document.createElement("li");
-        const bookmarkletLink = document.createElement("a");
-        bookmarkletLink.href = bookmarklet.url;
-        bookmarkletLink.textContent = bookmarklet.title;
-
-        // Add buttons for editing and deleting bookmarklets
-        const editButton = document.createElement("button");
-        editButton.textContent = "Edit";
-        editButton.classList.add("button");
-        editButton.addEventListener("click", () => {
-          // Implement a function to edit the bookmarklet
-          editBookmarklet(bookmarklet);
-        });
-
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.className = "delete-button button";
-        deleteButton.addEventListener("click", () => {
-          // Implement a function to delete the bookmarklet
-          deleteBookmarklet(bookmarklet);
-        });
-
-        listItem.appendChild(bookmarkletLink);
-        listItem.appendChild(editButton);
-        listItem.appendChild(deleteButton);
-
+        const listItem = createBookmarkletListItem(bookmarklet);
         bookmarkletList.appendChild(listItem);
       });
     });
   }
 
+  // Create a list item for a bookmarklet
+  function createBookmarkletListItem(bookmarklet) {
+    const listItem = document.createElement('li');
+    const bookmarkletLink = createBookmarkletLink(bookmarklet);
+    const editButton = createButton('Edit', 'button', 'edit-button', () => editBookmarklet(bookmarklet));
+    const deleteButton = createButton('Delete', 'delete-button', 'button', () => deleteBookmarklet(bookmarklet));
+
+    listItem.appendChild(bookmarkletLink);
+    listItem.appendChild(editButton);
+    listItem.appendChild(deleteButton);
+
+    return listItem;
+  }
+
+  // Create a link for a bookmarklet
+  function createBookmarkletLink(bookmarklet) {
+    const bookmarkletLink = document.createElement('a');
+    bookmarkletLink.href = bookmarklet.url;
+    bookmarkletLink.textContent = bookmarklet.title;
+    return bookmarkletLink;
+  }
+
+  // Create a button element
+  function createButton(text, className, id, clickHandler) {
+    const button = document.createElement('button');
+    button.textContent = text;
+    button.classList.add(className, id);
+    button.addEventListener('click', clickHandler);
+    return button;
+  }
+
+  // Edit a bookmarklet
   function editBookmarklet(bookmarklet) {
-    const newName = prompt("Enter a new name for the bookmarklet:", bookmarklet.title);
-    const newCode = prompt("Enter the new JavaScript code:", decodeURIComponent(bookmarklet.url.split(":")[1]));
+    const newName = prompt('Enter a new name for the bookmarklet:', bookmarklet.title);
+    const newCode = prompt('Enter the new JavaScript code:', decodeURIComponent(bookmarklet.url.split(':')[1]));
 
     if (newName !== null && newCode !== null) {
-      // Update the bookmarklet with the new name and code
       const updatedUrl = `javascript:${encodeURIComponent(newCode)}`;
-      chrome.bookmarks.update(bookmarklet.id, { title: newName, url: updatedUrl }, (updatedBookmark) => {
-        console.log("Bookmarklet updated: ", updatedBookmark);
-        // Refresh the list after updating
+      chrome.bookmarks.update(bookmarklet.id, { title: newName, url: updatedUrl }, () => {
+        console.log('Bookmarklet updated:', bookmarklet);
         populateBookmarkletList();
       });
     }
   }
 
+  // Delete a bookmarklet
   function deleteBookmarklet(bookmarklet) {
     chrome.bookmarks.remove(bookmarklet.id, () => {
       console.log(`Bookmarklet with ID ${bookmarklet.id} removed`);
-      // Refresh the list after deleting
       populateBookmarkletList();
     });
   }
 
-  // Call populateBookmarkletList when the page loads
-  document.addEventListener("DOMContentLoaded", populateBookmarkletList);
-
-  // Add event listeners for Create, Update, Delete buttons in your popup.js
-  document.getElementById("create-bookmarklet").addEventListener("click", () => {
-    // Get user input (name and JavaScript code) from input elements
-    const name = document.getElementById("bookmarklet-name").value;
-    const code = document.getElementById("bookmarklet-code").value;
-    createBookmarklet(name, code);
-  });
-
-  // When you create a bookmarklet, save its ID along with a unique identifier (e.g., title or code)
-  function createBookmarklet(name, code) {
-    const url = `javascript:${encodeURIComponent(code)}`;
-    chrome.bookmarks.create(
-      {
-        parentId: "1", // or the ID of a specific folder
-        title: name,
-        url: url,
-      },
-      function (newBookmark) {
-        console.log("New bookmarklet created: ", newBookmark);
-        // Refresh the list after creating
-        populateBookmarkletList();
-      }
-    );
+  // Get all bookmarklets with 'javascript:' scheme
+  function getBookmarklets(callback) {
+    chrome.bookmarks.search({ query: 'javascript:*' }, callback);
   }
 
+  // Create a new bookmarklet
+  function createBookmarklet() {
+    const name = document.getElementById('bookmarklet-name').value;
+    const code = document.getElementById('bookmarklet-code').value;
+
+    if (name && code) {
+      const url = `javascript:${encodeURIComponent(code)}`;
+      chrome.bookmarks.create(
+        {
+          parentId: '1', // or the ID of a specific folder
+          title: name,
+          url: url,
+        },
+        (newBookmark) => {
+          console.log('New bookmarklet created:', newBookmark);
+          populateBookmarkletList();
+        }
+      );
+    }
+  }
 })();
