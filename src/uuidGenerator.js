@@ -1,8 +1,7 @@
 import { copyToClipboard } from './common';
+import { v4 as uuidv4 } from 'uuid';
 
-const { v4: uuidv4 } = require('uuid');
-
-export function uuidGenerator() {
+function uuidGenerator() {
     const generateButton = document.getElementById('generate-uuid');
     const generatedUuidElement = document.getElementById('generated-uuid');
 
@@ -21,4 +20,8 @@ export function uuidGenerator() {
     } finally {
         generateButton.disabled = false;
     }
+}
+
+export function initializeUUIDGeneratorPage() {
+    document.getElementById('generate-uuid').addEventListener('click', uuidGenerator);
 }

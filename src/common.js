@@ -1,19 +1,32 @@
 export function setupNavbar() {
-    // ... (same as the original setupNavbar function)
-}
+    function collapseAllPages() {
+        const navLinks = document.querySelectorAll('.navbar .nav-link');
+        navLinks.forEach((el) => {
+            el.classList.remove('active');
+            document.querySelector(el.getAttribute('href')).classList.add('collapse');
+        });
+    }
 
-export function populateBookmarkletList() {
-    // ... (same as the original populateBookmarkletList function)
+    const navbar = document.querySelector('.navbar');
+    navbar.addEventListener('click', (event) => {
+        if (event.target.classList.contains('nav-link')) {
+            const collapseId = event.target.getAttribute('href');
+            const collapseElement = document.querySelector(collapseId);
+
+            if (!event.target.classList.contains('active')) {
+                collapseAllPages();
+                event.target.classList.add('active');
+                collapseElement.classList.remove('collapse');
+            }
+        }
+    });
 }
 
 export function copyToClipboard(text) {
-    // ... (same as the original copyToClipboard function)
-}
-
-export function createBookmarkletListItem(bookmarklet) {
-    // ... (same as the original createBookmarkletListItem function)
-}
-
-export function getBookmarklets(callback) {
-    // ... (same as the original getBookmarklets function)
+    const tempTextarea = document.createElement('textarea');
+    tempTextarea.value = text;
+    document.body.appendChild(tempTextarea);
+    tempTextarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempTextarea);
 }

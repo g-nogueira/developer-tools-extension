@@ -1,6 +1,9 @@
-import { setupNavbar, populateBookmarkletList } from './common';
+import { setupNavbar } from './common';
+import { initializeBookmarkletManagerPage } from './bookmarkletManager';
+import { initializeUUIDGeneratorPage } from './uuidGenerator';
 
-export function initializePage() {
+export function initializePages() {
     setupNavbar();
-    populateBookmarkletList();
+    initializeBookmarkletManagerPage();
+    initializeUUIDGeneratorPage();
 }
