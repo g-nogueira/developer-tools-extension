@@ -18,7 +18,6 @@ body {
     width: 100%;
     background-color: #f8f8f8;
     padding: 20px;
-    margin: 20px auto;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -34,15 +33,16 @@ body {
     background-color: #4CAF50;
     padding: 15px;
     border-radius: 8px;
-    margin-bottom: 20px;
 }
 
 /* Section styling */
 .section {
+    background-color: #f8f8f8;
+    border: 1px solid #e0e0e0;
     padding: 20px;
-    border-left: 4px solid #4CAF50;
     margin-left: 20px;
-    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Navigation links */
@@ -99,34 +99,108 @@ body {
     background-color: #2980b9;
 }
 
-/* Button IDs */
-#generate-uuid,
-#add-bookmarklet,
-#save-code,
-#clear-bookmarklets {
-    /* Additional specific styles if needed */
+/* UUID Generator Section Styling */
+#uuid h2 {
+    color: #333;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
 }
 
-/* Generate UUID button */
-#generate-uuid {
-    cursor: pointer;
+#uuid p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* UUID Controls Styling */
+.uuid-controls {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.uuid-controls label {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #333;
+}
+
+.uuid-controls input[type="number"] {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.uuid-controls button {
     background-color: #3498db;
     color: #fff;
-    padding: 8px 15px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-#generate-uuid:hover {
+.uuid-controls button:hover {
     background-color: #2980b9;
 }
 
-#generated-uuid {
-    margin-top: 10px;
-    font-weight: bold;
+/* Generated UUIDs History Styling */
+.uuid-history {
+    margin-top: 20px;
+}
+
+.uuid-history ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.uuid-history li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.uuid-history li h3 {
+    font-size: 1rem;
+    margin-bottom: 5px;
     color: #333;
+}
+
+/* Notification Message Styling */
+.notification {
+    background-color: #dff0d8; /* light green background */
+    color: #3c763d; /* dark green text */
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 4px;
+    display: none; /* hidden by default */
+}
+
+.notification.visible {
+    display: block;
+    /* show when there's a message */
+}
+
+/* Copy Button Styling */
+.copy-button {
+    background-color: #34c759;
+    color: #fff;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.copy-button:hover {
+    background-color: #30b251;
 }
 
 /* Code Execution section */
@@ -178,16 +252,6 @@ body {
 }
 
 /* Bookmarklet Manager section styling */
-#bookmarklet-manager {
-    padding: 20px;
-    border-left: 4px solid #4CAF50;
-    margin-left: 20px;
-    margin-bottom: 20px;
-    background-color: #f8f8f8;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
-
 /* Header for "Add New Bookmarklet" section */
 #bookmarklet-manager h3 {
     font-size: 1.2rem;
